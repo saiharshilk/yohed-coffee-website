@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --cotton: #faf6ee;
+  --cotton-deep: #f1e8d8;
+  --bean: #2a1a12;
+  --bean-soft: #4a3428;
+  --clay: #b5552b;
+  --clay-ink: #9a4421; /* darker clay for small text on cotton: 5.9:1 */
+  --green-bean: #8e9b6a;
+  --green-ink: #5c6840;
+  --gold: #d9a441;
+  --emerald: #1f6f50; /* tibeb patterns only */
+  --tibeb-red: #b8322a; /* tibeb patterns only */
+}
+
+@theme inline {
+  --color-cotton: var(--cotton);
+  --color-cotton-deep: var(--cotton-deep);
+  --color-bean: var(--bean);
+  --color-bean-soft: var(--bean-soft);
+  --color-clay: var(--clay);
+  --color-clay-ink: var(--clay-ink);
+  --color-green-bean: var(--green-bean);
+  --color-green-ink: var(--green-ink);
+  --color-gold: var(--gold);
+  --font-display: var(--font-instrument), "Times New Roman", serif;
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
+  --font-geez: var(--font-ethiopic), "Noto Serif Ethiopic", serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background-color: var(--cotton);
+  color: var(--bean);
+  font-family: var(--font-sans);
+  /* Woven cotton: a faint warp/weft grid, kept at very low opacity. */
+  background-image:
+    repeating-linear-gradient(0deg, rgb(42 26 18 / 0.022) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgb(42 26 18 / 0.018) 0 1px, transparent 1px 5px);
+}
+
+section[id], [id="food"] { scroll-margin-top: 3.5rem; }
+@media (min-width: 768px) { section[id], [id="food"] { scroll-margin-top: 7.5rem; } }
+
+:focus-visible {
+  outline: 3px solid var(--clay);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.on-dark :focus-visible, .on-dark:focus-visible { outline-color: var(--gold); }
+
+::selection { background: var(--gold); color: var(--bean); }
+
+.font-geez { font-family: var(--font-geez); }
+
+/* Incense smoke & steam: slow upward drift. Disabled for reduced motion. */
+@keyframes smoke-rise {
+  0% { transform: translateY(8px) scaleX(1); opacity: 0; }
+  20% { opacity: 0.7; }
+  100% { transform: translateY(-36px) scaleX(1.15); opacity: 0; }
+}
+.smoke { animation: smoke-rise 6s ease-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+.smoke-2 { animation-delay: 2s; }
+.smoke-3 { animation-delay: 4s; }
+
+@keyframes pour {
+  from { stroke-dashoffset: 240; }
+  to { stroke-dashoffset: 0; }
+}
+.pour-stream { stroke-dasharray: 12 8; animation: pour 2.4s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .smoke, .pour-stream { animation: none; }
+  .smoke { opacity: 0.5; }
+}
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Hero settles in on load. Transform only, so the LCP text paints immediately. */
+@keyframes hero-rise { from { transform: translateY(14px); } to { transform: none; } }
+.hero-rise { animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) { .hero-rise { animation: none; } }
