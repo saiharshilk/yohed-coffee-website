@@ -32,6 +32,14 @@ The site looks finished with zero photos because every slot has an illustrated S
 | Beans | `space-beans.jpg` | 1:1 |
 | Open Graph | `public/og.png` | 1200×630 (still to add) |
 
+## World map
+
+The map in the origin section is generated from Natural Earth data (via `world-atlas`). To regenerate `public/world-map.svg` and `src/content/world-map.json`, run:
+
+```bash
+node scripts/build-world-map.mjs
+```
+
 ## Deploys
 
 Each push to `main` runs `.github/workflows/deploy.yml`, which builds the static export and publishes `./out` to GitHub Pages at `https://<user>.github.io/yohed-coffee-website/`. In production, `next.config.ts` sets `basePath`/`assetPrefix` to `/yohed-coffee-website`. In dev it's empty.
